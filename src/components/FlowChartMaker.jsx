@@ -111,7 +111,7 @@ const FlowChartMaker = () => {
         style: { stroke: "#fff" },
       },
     ]);
-  }, []);
+  }, [setEdges, setNodes]);
 
   const onConnect = useCallback(
     (params) =>

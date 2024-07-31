@@ -118,7 +118,7 @@ const FlowChartMaker = () => {
       setEdges((eds) =>
         addEdge({ ...params, animated: true, style: { stroke: "#fff" } }, eds)
       ),
-    []
+    [setEdges]
   );
   return (
     <ReactFlow

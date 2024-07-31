@@ -2,7 +2,7 @@ import React, { memo, useState } from "react";
 import { Handle, Position, NodeToolbar } from "@xyflow/react";
 
 export default memo(({ data, isConnectable }) => {
-  const [bgColor, setBgColor] = useState("bg-orange-400");
+  const [bgColor, setBgColor] = useState("bg-purple-600");
   return (
     <>
       <Handle
@@ -38,7 +38,12 @@ export default memo(({ data, isConnectable }) => {
           onClick={() => setBgColor("bg-purple-600")}
         ></button>
       </NodeToolbar>
-      <div className={`w-12 h-12 rounded-full ${bgColor}`}></div>
+      <div
+        className={`w-20 h-12 ${bgColor}`}
+        style={{
+          transform: "skew(-30deg)",
+        }}
+      ></div>
       <Handle
         type="source"
         position={Position.Right}

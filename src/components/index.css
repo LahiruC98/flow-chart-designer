@@ -5,3 +5,33 @@
   border-radius: 5px;
   text-align: center;
 }
+.cylinder {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(
+    to bottom,
+    #d97706,
+    #d97706 50%,
+    #fbbf24 50%,
+    #fbbf24
+  );
+}
+.cylinder::before,
+.cylinder::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border-radius: 50%;
+}
+.cylinder::before {
+  top: 0;
+  background: #d97706;
+}
+.cylinder::after {
+  bottom: 0;
+  background: #fbbf24;
+}

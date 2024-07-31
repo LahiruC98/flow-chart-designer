@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { Handle, Position } from "@xyflow/react";
+import React, { memo } from 'react';
+import { Handle, Position } from '@xyflow/react';
 
 export default memo(({ data, isConnectable }) => {
   return (
@@ -7,8 +7,8 @@ export default memo(({ data, isConnectable }) => {
       <Handle
         type="target"
         position={Position.Left}
-        style={{ background: "#555" }}
-        onConnect={(params) => console.log("handle onConnect", params)}
+        style={{ background: '#555' }}
+        onConnect={(params) => console.log('handle onConnect', params)}
         isConnectable={isConnectable}
       />
       <div>
@@ -24,14 +24,14 @@ export default memo(({ data, isConnectable }) => {
         type="source"
         position={Position.Right}
         id="a"
-        style={{ top: 10, background: "#555" }}
+        style={{ top: 10, background: '#555' }}
         isConnectable={isConnectable}
       />
       <Handle
         type="source"
         position={Position.Right}
         id="b"
-        style={{ bottom: 10, top: "auto", background: "#555" }}
+        style={{ bottom: 10, top: 'auto', background: '#555' }}
         isConnectable={isConnectable}
       />
     </>

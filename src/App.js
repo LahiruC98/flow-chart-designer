@@ -1,9 +1,8 @@
-import "./App.css";
-import FlowChartMaker from "./components/FlowChartMaker";
+import FlowChartMaker from './components/FlowChartMaker';
 
 function App() {
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <div style={{ height: '100vh', width: '100vw' }}>
       <FlowChartMaker />
     </div>
   );

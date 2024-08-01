@@ -16,10 +16,6 @@ import RoundRectangle from "./shapes/RoundRectangle";
 import Diamond from "./shapes/Diamond";
 import Rectangle from "./shapes/Rectangle";
 import Parallelogram from "./shapes/Parallelogram";
-import ShapeCreator from "./shapes/ShapeCreator";
-import { type } from "@testing-library/user-event/dist/type";
-import { width } from "@fortawesome/free-solid-svg-icons/fa0";
-
 const initBgColor = "#1A192B";
 
 const connectionLineStyle = { stroke: "#fff" };

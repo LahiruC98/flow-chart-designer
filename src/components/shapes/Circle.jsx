@@ -70,7 +70,16 @@ export default memo(({ data, isConnectable }) => {
           +
         </button>
       </NodeToolbar>
-      <div className={`w-12 h-12 rounded-full ${bgColor}`}></div>
+      <div
+        className={`w-12 h-12 rounded-full ${bgColor} flex items-center justify-center relative`}
+      >
+        <input
+          className="w-11/12 h-2 text-center border-none focus:outline-none bg-transparent"
+          style={{ fontSize: "8px" }}
+          type="text"
+          placeholder="Label"
+        />
+      </div>
       <Handle
         type="source"
         position={Position.Right}

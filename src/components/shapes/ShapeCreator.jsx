@@ -3,7 +3,6 @@ import { Handle, Position, NodeToolbar } from "@xyflow/react";
 import SelectNewNodeType from "../models/SelectNewNodeType";
 
 export default memo(({ data, isConnectable, shapeType }) => {
-  console.log("/???????", shapeType);
   const [bgColor, setBgColor] = useState("bg-lime-400");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [shape, setShape] = useState(null);
@@ -53,7 +52,7 @@ export default memo(({ data, isConnectable, shapeType }) => {
         break;
     }
     console.log("-------------", shape);
-  }, [shapeType, bgColor]);
+  }, []);
 
   return (
     <>

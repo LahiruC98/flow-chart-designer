@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { Handle, Position, NodeToolbar, NodeResizer } from "@xyflow/react";
+import { Handle, Position, NodeToolbar } from "@xyflow/react";
 import SelectNewNodeType from "../models/SelectNewNodeType";
 
 export default memo(({ data, isConnectable }) => {

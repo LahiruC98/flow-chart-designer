@@ -1,9 +1,22 @@
 import React, { memo, useState } from "react";
-import { Handle, Position, NodeToolbar } from "@xyflow/react";
+import { Handle, Position, NodeToolbar, NodeResizer } from "@xyflow/react";
+import SelectNewNodeType from "../models/SelectNewNodeType";
 
-const CustomShape = ({ data, isConnectable }) => {
-  const [bgColor, setBgColor] = useState("bg-lime-400");
+export default memo(({ data, isConnectable }) => {
+  const [bgColor, setBgColor] = useState("bg-rose-400");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isToolBarVisible, setIsToolBarVisible] = useState(
+    data.forceToolbarVisible || undefined,
+  );
+  const handleCreateNewNode = () => {
+    setIsToolBarVisible(false);
+    setIsModalVisible(true);
+  };
 
+  const closeModal = () => {
+    setIsToolBarVisible(data.forceToolbarVisible || undefined);
+    setIsModalVisible(false);
+  };
   return (
     <>
       <Handle
@@ -14,7 +27,7 @@ const CustomShape = ({ data, isConnectable }) => {
         isConnectable={isConnectable}
       />
       <NodeToolbar
-        isVisible={data.forceToolbarVisible || undefined}
+        isVisible={isToolBarVisible}
         position={Position.Top}
         className="flex-auto p-2 bg-slate-600 rounded-lg"
       >
@@ -30,9 +43,13 @@ const CustomShape = ({ data, isConnectable }) => {
           className="w-8 h-8 rounded-full bg-fuchsia-400"
           onClick={() => setBgColor("bg-fuchsia-400")}
         ></button>
+        <button
+          className="w-8 h-8 rounded-full ms-2 bg-rose-400"
+          onClick={() => setBgColor("bg-rose-400")}
+        ></button>
       </NodeToolbar>
       <NodeToolbar
-        isVisible={data.forceToolbarVisible || undefined}
+        isVisible={isToolBarVisible}
         position={Position.Right}
         className="flex-auto p-2 bg-slate-600 rounded-lg"
       >
@@ -41,6 +58,12 @@ const CustomShape = ({ data, isConnectable }) => {
           onClick={() => data.deleteSelectedNode()}
         >
           X
+        </button>
+        <button
+          className="w-8 h-8 rounded-full bg-green-500 text-white ms-2"
+          onClick={handleCreateNewNode}
+        >
+          +
         </button>
       </NodeToolbar>
       <div className={`w-12 h-12 ${bgColor}`}></div>
@@ -58,8 +81,11 @@ const CustomShape = ({ data, isConnectable }) => {
         style={{ bottom: 10, top: "auto", background: "#555" }}
         isConnectable={isConnectable}
       />
+      <SelectNewNodeType
+        isVisible={isModalVisible}
+        onClose={closeModal}
+        onCreateNewNode={data.createNewNode}
+      />
     </>
   );
-};
-
-export default memo(CustomShape);
+});

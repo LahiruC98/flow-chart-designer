@@ -6,6 +6,7 @@ import {
   addEdge,
   MiniMap,
   Controls,
+  Panel,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
@@ -14,6 +15,10 @@ import Circle from "./shapes/Circle";
 import RoundRectangle from "./shapes/RoundRectangle";
 import Diamond from "./shapes/Diamond";
 import Rectangle from "./shapes/Rectangle";
+import Parallelogram from "./shapes/Parallelogram";
+import ShapeCreator from "./shapes/ShapeCreator";
+import { type } from "@testing-library/user-event/dist/type";
+import { width } from "@fortawesome/free-solid-svg-icons/fa0";
 
 const initBgColor = "#1A192B";
 
@@ -24,6 +29,7 @@ const nodeTypes = {
   roundRectangle: RoundRectangle,
   diamond: Diamond,
   rectangle: Rectangle,
+  parallelogram: Parallelogram,
 };
 
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -33,86 +39,24 @@ const FlowChartMaker = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState(null);
   const [bgColor, setBgColor] = useState(initBgColor);
+  const [colorMode, setColorMode] = useState("dark");
 
   useEffect(() => {
-    const onChange = (event) => {
-      setNodes((nds) =>
-        nds.map((node) => {
-          if (node.id !== "2") {
-            return node;
-          }
-
-          const color = event.target.value;
-
-          setBgColor(color);
-
-          return {
-            ...node,
-            data: {
-              ...node.data,
-              color,
-            },
-          };
-        }),
-      );
-    };
-
     setNodes([
       {
         id: "1",
-        type: "roundRectangle",
-        data: { label: "An input node", id: "1", deleteSelectedNode },
+        type: "circle",
+        data: {
+          label: "An input node",
+          id: "1",
+          deleteSelectedNode,
+          createNewNode,
+        },
         position: { x: 0, y: 50 },
         sourcePosition: "right",
       },
-      {
-        id: "2",
-        type: "circle",
-        data: { onChange: onChange, color: initBgColor, deleteSelectedNode },
-        position: { x: 300, y: 50 },
-      },
-      {
-        id: "3",
-        type: "diamond",
-        data: { label: "Output A", id: "1", deleteSelectedNode },
-        position: { x: 650, y: 25 },
-        targetPosition: "left",
-      },
-      {
-        id: "4",
-        type: "rectangle",
-        data: { label: "Output B", id: "1", deleteSelectedNode },
-        position: { x: 650, y: 100 },
-        targetPosition: "left",
-      },
     ]);
-
-    setEdges([
-      {
-        id: "e1-2",
-        source: "1",
-        target: "2",
-        animated: true,
-        style: { stroke: "#fff" },
-      },
-      {
-        id: "e2a-3",
-        source: "2",
-        target: "3",
-        sourceHandle: "a",
-        animated: true,
-        style: { stroke: "#fff" },
-      },
-      {
-        id: "e2b-4",
-        source: "2",
-        target: "4",
-        sourceHandle: "b",
-        animated: true,
-        style: { stroke: "#fff" },
-      },
-    ]);
-  }, [setEdges, setNodes]);
+  }, [setNodes]);
 
   const onConnect = useCallback(
     (params) =>
@@ -139,12 +83,52 @@ const FlowChartMaker = () => {
     }
   };
 
+  const createNewNode = (type) => {
+    const newNodeId = (nodes.length + 1).toString();
+    const newNode = {
+      id: newNodeId,
+      type: type,
+      data: {
+        label: `Node ${newNodeId}`,
+        id: newNodeId,
+        deleteSelectedNode,
+        createNewNode,
+      },
+      position: {
+        x: selectedNode.position.x + Math.random() * 300 + 50,
+        y: selectedNode.position.y + Math.random() * 200 + 50,
+      },
+      targetPosition: "left",
+    };
+
+    const newEdge = {
+      type: "smoothstep",
+      id: `e${selectedNode.id}-${newNodeId}`,
+      source: selectedNode.id,
+      target: newNodeId,
+      animated: false,
+      style: { stroke: "#6121c2", strokeWidth: 3 },
+    };
+
+    setNodes((nds) => [...nds, newNode]);
+    setEdges((eds) => [...eds, newEdge]);
+  };
+
+  const onChange = (evt) => {
+    setBgColor(() => (bgColor === initBgColor ? "#ccc" : initBgColor));
+    setColorMode(evt.target.value);
+  };
+
   return (
     <>
       <ReactFlow
         nodes={nodes.map((node) => ({
           ...node,
-          data: { ...node.data, deleteSelectedNode: deleteSelectedNode },
+          data: {
+            ...node.data,
+            deleteSelectedNode: deleteSelectedNode,
+            createNewNode: createNewNode,
+          },
         }))}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -159,6 +143,7 @@ const FlowChartMaker = () => {
         fitView
         attributionPosition="bottom-left"
         onNodeClick={onNodeClick}
+        colorMode={colorMode}
       >
         <MiniMap
           nodeStrokeColor={(n) => {
@@ -172,6 +157,13 @@ const FlowChartMaker = () => {
           }}
         />
         <Controls />
+        <Panel position="top-right">
+          <select onChange={onChange} data-testid="colormode-select">
+            <option value="dark">dark</option>
+            <option value="light">light</option>
+            <option value="system">system</option>
+          </select>
+        </Panel>
       </ReactFlow>
     </>
   );

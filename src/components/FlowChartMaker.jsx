@@ -52,7 +52,7 @@ const FlowChartMaker = () => {
         sourcePosition: "right",
       },
     ]);
-  }, [setNodes, createNewNode, deleteSelectedNode]);
+  }, [setNodes]);
 
   const onConnect = useCallback(
     (params) =>

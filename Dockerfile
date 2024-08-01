@@ -13,7 +13,7 @@ RUN npm install -g serve
 ENV NODE_ENV=production
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 4008
 
 # Command to run the web server and serve the built application
 CMD ["serve", "-s", "build", "-l", "3000"]

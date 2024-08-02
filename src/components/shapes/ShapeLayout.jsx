@@ -2,8 +2,8 @@ import React, { memo, useState } from "react";
 import { Handle, Position, NodeToolbar } from "@xyflow/react";
 import SelectNewNodeType from "../models/SelectNewNodeType";
 
-export default memo(({ data, isConnectable }) => {
-  const [bgColor, setBgColor] = useState("bg-orange-400");
+const CustomShape = ({ data, isConnectable }) => {
+  const [bgColor, setBgColor] = useState("bg-lime-400");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isToolBarVisible, setIsToolBarVisible] = useState(
     data.forceToolbarVisible || undefined,
@@ -17,6 +17,7 @@ export default memo(({ data, isConnectable }) => {
     setIsToolBarVisible(data.forceToolbarVisible || undefined);
     setIsModalVisible(false);
   };
+
   return (
     <>
       <Handle
@@ -29,7 +30,7 @@ export default memo(({ data, isConnectable }) => {
       <NodeToolbar
         isVisible={isToolBarVisible}
         position={Position.Top}
-        className="flex-auto p-2 bg-slate-600 rounded-lg z-10"
+        className="flex-auto p-2 bg-slate-600 rounded-lg"
       >
         <button
           className="w-8 h-8 rounded-full bg-orange-400"
@@ -42,14 +43,6 @@ export default memo(({ data, isConnectable }) => {
         <button
           className="w-8 h-8 rounded-full bg-fuchsia-400"
           onClick={() => setBgColor("bg-fuchsia-400")}
-        ></button>
-        <button
-          className="w-8 h-8 rounded-full ms-2 bg-rose-400"
-          onClick={() => setBgColor("bg-rose-400")}
-        ></button>
-        <button
-          className="w-8 h-8 rounded-full ms-2 bg-purple-600"
-          onClick={() => setBgColor("bg-purple-600")}
         ></button>
       </NodeToolbar>
       <NodeToolbar
@@ -70,16 +63,7 @@ export default memo(({ data, isConnectable }) => {
           +
         </button>
       </NodeToolbar>
-      <div
-        className={`w-12 h-12 rounded-full ${bgColor} flex items-center justify-center relative`}
-      >
-        <input
-          className="w-11/12 h-2 text-center border-none focus:outline-none bg-transparent"
-          style={{ fontSize: "8px" }}
-          type="text"
-          placeholder="Label"
-        />
-      </div>
+      {<div className={`w-12 h-12 ${bgColor}`}></div>}
       <Handle
         type="source"
         position={Position.Right}
@@ -101,4 +85,6 @@ export default memo(({ data, isConnectable }) => {
       />
     </>
   );
-});
+};
+
+export default memo(CustomShape);
